@@ -1,5 +1,5 @@
 // Distribucion Uniforme
-function uniforme(cantidad, desde, hasta) {
+exports.uniforme = (cantidad, desde, hasta) => {
     var listaNumeros = [];
     for(var i=0; i<cantidad ; i++){
         var rnd = Math.random();
@@ -9,11 +9,11 @@ function uniforme(cantidad, desde, hasta) {
     // console.log(listaNumeros);
     return listaNumeros; 
 }
-console.log("UNIFORME ", uniforme(6, 5, 8));
+// console.log("UNIFORME ", uniforme(6, 5, 8));
 
 
 // Distribucion Exponencial
-function exponencial(cantidad, lambda) {
+exports.exponencial = (cantidad, lambda) => {
     listaNumeros = [];
     for(var i=0; i<cantidad; i++) {
         var rnd = Math.random();
@@ -22,11 +22,11 @@ function exponencial(cantidad, lambda) {
     }
     return listaNumeros;
 }
-console.log("EXPONENCIAL ", exponencial(6, 4));
+// console.log("EXPONENCIAL ", exponencial(6, 4));
 
 
 // Distribucion Normal Box-Muller
-function normalBoxMuller(cantidad, media, desviacion) {
+exports.normalBoxMuller = (cantidad, media, desviacion) => {
     var listaNumeros = [];
     for(var i=0; i<cantidad ; i++){
         var rnd1 = Math.random().toFixed(2);
@@ -43,11 +43,11 @@ function normalBoxMuller(cantidad, media, desviacion) {
     // console.log(listaNumeros);
     return listaNumeros; 
 }
-console.log("BOX-MULLER ", normalBoxMuller(5, 5, 1));
+// console.log("BOX-MULLER ", normalBoxMuller(5, 5, 1));
 
 
 // Distribucion Normal con Convolucion 
-function normalConvolucion(cantidad, cantidadRnd, media, desviacion) {
+exports.normalConvolucion = (cantidad, cantidadRnd, media, desviacion) => {
     var listaNumeros = [];
     var sumaRnd = 0;
     for(i=0; i<cantidad ; i++){
@@ -60,11 +60,11 @@ function normalConvolucion(cantidad, cantidadRnd, media, desviacion) {
     // console.log(listaNumeros);
     return listaNumeros;
 }
-console.log("CONVOLUCION ", normalConvolucion(6, 12 , 11, 0.3));
+// console.log("CONVOLUCION ", normalConvolucion(6, 12 , 11, 0.3));
 
 
 // Distribucion Poisson
-function Poisson(cantidad, media) {
+exports.poisson = (cantidad, media) => {
     var listaNumeros = [];
     for(var i=0; i<cantidad; i++) {
         var p = 1;
@@ -82,11 +82,9 @@ function Poisson(cantidad, media) {
     }
     return listaNumeros;
 }
-console.log("POISSON ", Poisson(6, 2));
+// console.log("POISSON ", Poisson(6, 2));
 
 
 
-function saludar(nombre) {
-    console.log("Hola " + nombre);
-}
-saludar("kalil");
+
+// module.exports = { uniforme, exponencial, normalBoxMuller, normalConvolucion, poisson };
