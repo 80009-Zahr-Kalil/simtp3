@@ -1,0 +1,83 @@
+body {
+    margin: 40px;
+    padding: 0;
+    background: #131313;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+}
+
+.titulo1 {
+    font-family: 'Rubik Mono One', sans-serif;
+    font-size: 40px;
+    letter-spacing: 5px;
+    text-align: center;
+}
+.titulo2 {
+    font-size: 30px;
+    letter-spacing: 5px;
+    text-align: center;
+}
+
+.subtitulo {
+    font-size: 25px;
+    letter-spacing: 2px;
+}
+
+select {
+    background: rgb(22, 88, 143);
+    font-size: 15px;
+    padding: 5px 0;
+    letter-spacing: 1px;
+    border-color: white;
+    border-radius: 5px;
+    color: white;
+}
+
+#inputs-container {
+    margin-top: 50px;
+}
+
+.input {
+    display: none;
+}
+
+
+.btn {
+    margin: 20px;
+    padding: 5px;
+    font-size: 20px;
+    letter-spacing: 2px;
+    font-weight: 500;
+    color: #000;
+    background-color: #fff;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+}
+.btn:hover {
+    background-color: #8634c9;
+    box-shadow: 0px 15px 20px rgba(138, 50, 165, 0.4);
+    color: #fff;
+}
+
+#rellenar {
+    font-family: 'Fjalla One', sans-serif;
+    width: 30%;
+    margin: auto;
+    background: rgb(197, 143, 42);
+    text-align: center;
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid #0c0c0c;
+    padding: 8px;
+}
+th {
+    background: rgb(206, 206, 35);
+    color: black;
+}

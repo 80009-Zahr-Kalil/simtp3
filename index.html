@@ -4,10 +4,81 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>SIM - TP3</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
-    
-    <script type="module" src="script.js"></script>
+    <p class="titulo1">SIMULACIÓN TP 3</p>
+    <hr>
+    <br>
+    <p class="titulo2">Distribuciones</p>
+    <p class="subtitulo">Elegí la Distribución</p>
+    <select id="selector" onchange="distribucionSeleccionada();">
+        <option value="0">-- Seleccionar Distribución --</option>
+        <option value="input-uniforme">Distribución Uniforme</option>
+        <option value="input-exponencial">Distribución Exponencial</option>
+        <option value="input-normalBoxMuller">Distribución Normal Box-Muller</option>
+        <option value="input-normalConvolucion">Distribución Normal Convolución</option>
+        <option value="input-poisson">Distribución Poisson</option>
+    </select>
+
+    <div id="inputs-container">
+        <div id="input-uniforme" class="input">
+            <h3 style="text-align: center;"><bold>Distribución Uniforme</bold></h3>
+            <label>Cantidad de variables a generar:</label> <input type="text" size="3" class="textbox"> <br>
+            <label>Desde: </label> <input type="text" size="3" class="textbox"> <br>
+            <label>Hasta: </label> <input type="text" size="3" class="textbox"> <br>
+            <button class="btn" onclick="mostrarOutput();">Generar</button>
+        </div>
+
+        <div id="input-exponencial" class="input">
+            <h3 style="text-align: center;"><bold>Distribución Exponencial</bold></h3>
+            <label>Cantidad de variables a generar: </label> <input type="text" size="3" class="textbox"> <br>
+            <label>Lambda:</label> <input type="text" size="3" class="textbox"> <br>
+            <button class="btn" onclick="mostrarOutput();">Generar</button>
+        </div>
+
+        <div id="input-normalBoxMuller" class="input">
+            <h3 style="text-align: center;"><bold>Distribución Normal Box-Muller</bold></h3>
+            <label>Cantidad de variables a generar: </label> <input type="text" size="3" class="textbox"> <br>
+            <label>Media:</label> <input type="text" size="3" class="textbox"> <br>
+            <label>Desviación:</label> <input type="text" size="3" class="textbox"> <br>
+            <button class="btn" onclick="mostrarOutput();">Generar</button>
+        </div>
+
+        <div id="input-normalConvolucion" class="input">
+            <h3 style="text-align: center;"><bold>Distribución Normal con Convolución</bold></h3> 
+            <label>Cantidad de variables a generar: </label> <input type="text" size="3" class="textbox"> <br>
+            <label>Cantidad de números random a utilizar:</label> <input type="text" size="3" class="textbox"> <br>
+            <label>Media:</label> <input type="text" size="3" class="textbox"> <br>
+            <label>Desviación:</label> <input type="text" size="3" class="textbox"> <br>
+            <button class="btn" onclick="mostrarOutput();">Generar</button>
+        </div>
+
+        <div id="input-poisson" class="input">
+            <h3 style="text-align: center;"><bold>Distribución Poisson</bold></h3>
+            <label>Cantidad de variables a generar: </label> <input type="text" size="3" class="textbox"> <br>
+            <label>Media:</label> <input type="text" size="3" class="textbox"> <br>
+            <button class="btn" onclick="mostrarOutput();">Generar</button>
+        </div>
+    </div>
+
+    <table id="rellenar" class="number-display animate__animated animate__zoomIn">
+            
+    </table>
+
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/dark.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+    <script type="module" src="scripts/script.js"></script>
 </body>
 </html>
