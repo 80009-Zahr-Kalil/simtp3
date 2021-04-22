@@ -1,14 +1,5 @@
 import * as Distribucion from "./Distribucion.js"
 
-// console.log(Distribucion.uniforme(6, 5, 8));
-// console.log(Distribucion.exponencial(6, 4));
-// console.log(Distribucion.normalBoxMuller(5, 5, 1));
-// console.log(Distribucion.normalConvolucion(6, 12 , 11, 0.3));
-// console.log(Distribucion.poisson(5, 4));
-
-// console.log(document.getElementById("input-uniforme").children)
-
-
 window.distribucionSeleccionada = function distribucionSeleccionada() {
     var elem = document.getElementById("selector");
     cambiarDistribucionActiva(elem.value);
@@ -51,7 +42,6 @@ function obtenerIntervalos(subintervalos, min, max) {
         var cierre = min + amplitud * (i+1);
         listaIntervalos.push([inicio, cierre]);
     }
-    // listaIntervalos[listaIntervalos.length-1[1]] += 0.01;
     return listaIntervalos;
 }
 
@@ -93,7 +83,6 @@ window.mostrarOutput = function mostrarOutput() { // Cuando cambio de distribuci
     var outputs = generar();
     var min = Math.min(...outputs);
     var max = Math.max(...outputs);
-    // console.log("MIN " + min + "  MAX " + max);
     var listaIntervalos = obtenerIntervalos(cantidadIntervalos, min, max);
     var frecuenciasObservadas = cantidadIntervalos!=-1 ? frecuencia(outputs, listaIntervalos) : frecuenciaPoisson(outputs);
     rellenarTabla(outputs);
@@ -101,8 +90,6 @@ window.mostrarOutput = function mostrarOutput() { // Cuando cambio de distribuci
     for(var i=0; i<listaIntervalos.length; i++) {
         intervalosString.push(listaIntervalos[i][0].toFixed(2).toString() + "-" + listaIntervalos[i][1].toFixed(2).toString());
     }
-    // console.log(listaIntervalos);
-    // console.log(frecuenciasObservadas);
     mostrarGrafico(intervalosString, frecuenciasObservadas, outputs);
 }
 
@@ -203,10 +190,7 @@ function mostrarGrafico(listaIntervalos, frecuenciasObservadas, outputs) {
                 }
             }
         } else {
-            // outputs.sort().filter((item, index) => outputs.indexOf(item) === index);
             var min = Math.min(...outputs);
-            console.log(min);
-            console.log("FR " + frecuenciasObservadas)
             for(var i=0; i<frecuenciasObservadas.length; i++) {
                 chart.data[i] = {
                     category: i+min, 
