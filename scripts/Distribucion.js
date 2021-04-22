@@ -1,5 +1,5 @@
 // Distribucion Uniforme
-export function uniforme (arr) { // [cantidad, desde, hasta]
+export function uniforme (arr) { // arr = [cantidad, desde, hasta]
     var listaNumeros = [];
     for(var i=0; i<arr[0] ; i++){
         var rnd = Math.random();
@@ -9,11 +9,10 @@ export function uniforme (arr) { // [cantidad, desde, hasta]
     console.log(listaNumeros);
     return listaNumeros; 
 }
-// console.log("UNIFORME ", uniforme([5,2,6]));
 
 
 // Distribucion Exponencial
-export function exponencial (arr) { // [cantidad, lambda]
+export function exponencial (arr) { // arr = [cantidad, lambda]
     var listaNumeros = [];
     for(var i=0; i<arr[0]; i++) {
         var rnd = Math.random();
@@ -23,15 +22,14 @@ export function exponencial (arr) { // [cantidad, lambda]
     console.log(listaNumeros);
     return listaNumeros;
 }
-// console.log("EXPONENCIAL ", exponencial(6, 4));
 
 
 // Distribucion Normal Box-Muller
-export function normalBoxMuller (arr) { // [cantidad, media, desviacion]
+export function normalBoxMuller (arr) { // arr = [cantidad, media, desviacion]
     var listaNumeros = [];
     for(var i=0; i<arr[0] ; i++){
-        var rnd1 = Math.random().toFixed(2);
-        var rnd2 = Math.random().toFixed(2);
+        var rnd1 = Math.random();
+        var rnd2 = Math.random();
         if(i%2==1){
             var res1 = ((Math.sqrt((-2) * Math.log(rnd1))) * (Math.cos(2*Math.PI*rnd2))) * arr[2] + arr[1];
             listaNumeros.push(Number(res1.toFixed(2)));
@@ -44,11 +42,10 @@ export function normalBoxMuller (arr) { // [cantidad, media, desviacion]
     console.log(listaNumeros);
     return listaNumeros; 
 }
-// console.log("BOX-MULLER ", normalBoxMuller(5, 5, 1));
 
 
 // Distribucion Normal con Convolucion 
-export function normalConvolucion (arr) { // [cantidad, cantidadRnd, media, desviacion]
+export function normalConvolucion (arr) { // arr = [cantidad, cantidadRnd, media, desviacion]
     var listaNumeros = [];
     for(var i=0; i<arr[0] ; i++){
         var sumaRnd = 0;
@@ -61,11 +58,10 @@ export function normalConvolucion (arr) { // [cantidad, cantidadRnd, media, desv
     console.log(listaNumeros);
     return listaNumeros;
 }
-//console.log("CONVOLUCION ", normalConvolucion([6, 12 , 11, 0.3]));
 
 
 // Distribucion Poisson
-export function poisson (arr) {  // [cantidad, media]
+export function poisson (arr) {  // arr = [cantidad, lambda]
     var listaNumeros = [];
     for(var i=0; i<arr[0]; i++) {
         var p = 1;
@@ -84,7 +80,3 @@ export function poisson (arr) {  // [cantidad, media]
     console.log(listaNumeros);
     return listaNumeros;
 }
-// console.log("POISSON ", Poisson(6, 2));
-
-
-

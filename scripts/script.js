@@ -1,5 +1,6 @@
 import * as Distribucion from "./Distribucion.js"
 
+
 window.distribucionSeleccionada = function distribucionSeleccionada() {
     var elem = document.getElementById("selector");
     cambiarDistribucionActiva(elem.value);
@@ -77,7 +78,8 @@ function frecuenciaPoisson(outputs) {
     return frecuenciasObservadas;
 }
 
-window.mostrarOutput = function mostrarOutput() { // Cuando cambio de distribucion quiero que desaparezca la tabla anterior y genere una nueva
+
+window.mostrarOutput = function mostrarOutput() { 
     var inputs = obtenerInputs();
     var cantidadIntervalos = obtenerInputIntervalo();
     var outputs = generar();
@@ -133,12 +135,8 @@ function rellenarTabla(outputs) {
 function mostrarGrafico(listaIntervalos, frecuenciasObservadas, outputs) {
     am4core.ready(function() {
 
-        // Themes begin
         am4core.useTheme(am4themes_dark);
         am4core.useTheme(am4themes_animated);
-        // Themes end
-        
-        
         
         var chart = am4core.create('chartdiv', am4charts.XYChart)
         chart.colors.step = 2;
