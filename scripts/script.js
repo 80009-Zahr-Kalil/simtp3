@@ -79,8 +79,20 @@ function frecuenciaPoisson(outputs) {
 }
 
 
+// function calcularChiCuadrado(subintervalos, frecuenciasObservadas) {
+//     var sumatoriaFrecuenciasObservadas = frecuenciasObservadas.reduce(function(a, b) {return a+b});
+//     var frecuenciaEsperada = sumatoriaFrecuenciasObservadas / subintervalos;
+//     var estadistico = 0;
+//     for(var i=0; i<frecuenciasObservadas.length; i++) {
+//         var n1 = (frecuenciasObservadas[i] - frecuenciaEsperada)**2;
+//         var n2 = n1 / frecuenciaEsperada;
+//         estadistico += n2;
+//     }
+//     return estadistico;
+// }
+
+
 window.mostrarOutput = function mostrarOutput() { 
-    var inputs = obtenerInputs();
     var cantidadIntervalos = obtenerInputIntervalo();
     var outputs = generar();
     var min = Math.min(...outputs);
@@ -88,6 +100,13 @@ window.mostrarOutput = function mostrarOutput() {
     var listaIntervalos = obtenerIntervalos(cantidadIntervalos, min, max);
     var frecuenciasObservadas = cantidadIntervalos!=-1 ? frecuencia(outputs, listaIntervalos) : frecuenciaPoisson(outputs);
     rellenarTabla(outputs);
+
+    // var estadistico = calcularChiCuadrado(cantidadIntervalos, outputs);
+    // $("#estadistico").html("ESTADÍSTICO: " + Number(estadistico.toFixed(4)));
+    // $("#estadistico").show();
+    // $("#hipotesisNula").html("No se rechaza la hipótesis nula de que el generador genera números pseudo aleatorios con distribución");
+    // $("#hipotesisNula").show();
+
     var intervalosString = [];
     for(var i=0; i<listaIntervalos.length; i++) {
         intervalosString.push(listaIntervalos[i][0].toFixed(2).toString() + "-" + listaIntervalos[i][1].toFixed(2).toString());
