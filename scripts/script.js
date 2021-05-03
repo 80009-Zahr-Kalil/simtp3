@@ -11,6 +11,9 @@ window.distribucionSeleccionada = function distribucionSeleccionada() {
 
 function cambiarDistribucionActiva(id) {
     $(".input").hide();
+    $("#estadistico").hide();
+    $("#hipotesisNula").hide();
+    $("#tablaFrecuencias").hide();
     $("#"+id).show();
     var list = document.getElementsByClassName("textbox");
     for (var item of list) {
@@ -79,17 +82,17 @@ function frecuenciaPoisson(outputs) {
 }
 
 
-// function calcularChiCuadrado(subintervalos, frecuenciasObservadas) {
-//     var sumatoriaFrecuenciasObservadas = frecuenciasObservadas.reduce(function(a, b) {return a+b});
-//     var frecuenciaEsperada = sumatoriaFrecuenciasObservadas / subintervalos;
-//     var estadistico = 0;
-//     for(var i=0; i<frecuenciasObservadas.length; i++) {
-//         var n1 = (frecuenciasObservadas[i] - frecuenciaEsperada)**2;
-//         var n2 = n1 / frecuenciaEsperada;
-//         estadistico += n2;
-//     }
-//     return estadistico;
-// }
+function calcularChiCuadrado(subintervalos, frecuenciasObservadas) {
+    var sumatoriaFrecuenciasObservadas = frecuenciasObservadas.reduce(function(a, b) {return a+b});
+    var frecuenciaEsperada = sumatoriaFrecuenciasObservadas / subintervalos;
+    var estadistico = 0;
+    for(var i=0; i<frecuenciasObservadas.length; i++) {
+        var n1 = (frecuenciasObservadas[i] - frecuenciaEsperada)**2;
+        var n2 = n1 / frecuenciaEsperada;
+        estadistico += n2;
+    }
+    return estadistico;
+}
 
 
 window.mostrarOutput = function mostrarOutput() { 
@@ -101,11 +104,22 @@ window.mostrarOutput = function mostrarOutput() {
     var frecuenciasObservadas = cantidadIntervalos!=-1 ? frecuencia(outputs, listaIntervalos) : frecuenciaPoisson(outputs);
     rellenarTabla(outputs);
 
-    // var estadistico = calcularChiCuadrado(cantidadIntervalos, outputs);
-    // $("#estadistico").html("ESTADÍSTICO: " + Number(estadistico.toFixed(4)));
-    // $("#estadistico").show();
-    // $("#hipotesisNula").html("No se rechaza la hipótesis nula de que el generador genera números pseudo aleatorios con distribución");
-    // $("#hipotesisNula").show();
+    var media = outputs.reduce(function(a, b) {return a+b}) / outputs.length;
+    var desviacion = Math.sqrt(varianza(outputs));
+    var lambda = 1/media;
+
+    var probabilidades = calcularProbabilidades(listaIntervalos, frecuenciasObservadas, media, desviacion, lambda);
+
+    var frecuenciasEsperadas = calcularFrecuenciaEsperada(probabilidades, outputs.length);
+
+    var tablaFrecuenciasConvertida = conversionTablaFrecuencias(listaIntervalos, frecuenciasObservadas, frecuenciasEsperadas, probabilidades);
+    renellarTablaFrecuencias(tablaFrecuenciasConvertida[0], tablaFrecuenciasConvertida[1], tablaFrecuenciasConvertida[2], tablaFrecuenciasConvertida[3]);
+
+    var estadistico = calcularChiCuadrado(cantidadIntervalos, outputs);
+    $("#estadistico").html("ESTADÍSTICO: " + Number(estadistico.toFixed(4)));
+    $("#estadistico").show();
+    $("#hipotesisNula").html("Se rechaza la hipótesis nula de que el generador genera números pseudo aleatorios con la distribución seleccionada.");
+    $("#hipotesisNula").show();
 
     var intervalosString = [];
     for(var i=0; i<listaIntervalos.length; i++) {
@@ -118,7 +132,7 @@ window.mostrarOutput = function mostrarOutput() {
 function generar() {
     var distribucionSeleccionada = document.getElementById("selector").value;
     var inputs = obtenerInputs(distribucionSeleccionada != "input-poisson");
-    var outputs = []
+    var outputs = [];
     for(var i=0; i<inputs.length; i++) {
         inputs[i] = Number(inputs[i]);
     }
@@ -148,6 +162,93 @@ function rellenarTabla(outputs) {
     }
     $("#rellenar").html(cadena);
     $("#rellenar").show();
+}
+
+
+function renellarTablaFrecuencias(listaIntervalos, frecuenciasObservadas, frecuenciasEsperadas, probabilidades) {
+    var cadena = "<tr class='titulo-tabla'><th>Intérvalos</th><th>FO</th><th>FE</th><th>P()</th></tr>";
+    for(var i=0; i<listaIntervalos.length; i++) {
+        cadena += "<tr><td>" + listaIntervalos[i] + "</td><td>" + frecuenciasObservadas[i] + "</td><td>" + frecuenciasEsperadas[i] + "</td><td>" + probabilidades[i] + "</td></tr>"
+    }
+    $("#tablaFrecuencias").html(cadena);
+    $("#tablaFrecuencias").show();
+}
+
+function conversionTablaFrecuencias(listaIntervalos, frecuenciasObservadas, frecuenciasEsperadas, probabilidades) {
+    var intervalosFinales = [];
+    var foFinales = [];
+    var feFinales = [];
+    var probFinales = [];
+
+    for(var i=0; i<listaIntervalos.length; i++) {
+        var str1 = listaIntervalos[i][0].toFixed(2) + " - " + listaIntervalos[i][1].toFixed(2);
+        intervalosFinales.push(str1);
+
+        var str2 = frecuenciasObservadas[i].toString();
+        foFinales.push(str2);
+
+        var str3 = frecuenciasEsperadas[i].toFixed(4);
+        feFinales.push(str3);
+
+        var str4 = probabilidades[i].toFixed(4);
+        probFinales.push(str4);
+    }
+
+    return [intervalosFinales, foFinales, feFinales, probFinales];
+}
+
+
+function calcularProbabilidades(listaIntervalos, frecuenciasObservadas, media, desviacion, lambda) {
+    var distribucionSeleccionada = document.getElementById("selector").value;
+    var probabilidades = [];
+    if(distribucionSeleccionada == "input-uniforme") {
+        for(var i=0; i<listaIntervalos.length; i++) {
+            var prob = Distribucion.probUniforme(listaIntervalos[i][0], listaIntervalos[i][1]);
+            probabilidades.push(prob);
+        }
+    }
+    if(distribucionSeleccionada == "input-exponencial") {
+        for(var i=0; i<listaIntervalos.length; i++) {
+            var prob = Distribucion.probExponencial(lambda, frecuenciasObservadas[i], listaIntervalos[i][0], listaIntervalos[i][1]);
+            probabilidades.push(prob);
+        }
+    }
+    if(distribucionSeleccionada == "input-normalBoxMuller") {
+        for(var i=0; i<listaIntervalos.length; i++) {
+            var prob = Distribucion.probNormal(media, desviacion, frecuenciasObservadas[i], listaIntervalos[i][0], listaIntervalos[i][1]);
+            probabilidades.push(prob);
+        }
+    }
+    if(distribucionSeleccionada == "input-normalConvolucion") {
+        for(var i=0; i<listaIntervalos.length; i++) {
+            var prob = Distribucion.probNormal(media, desviacion, frecuenciasObservadas[i], listaIntervalos[i][0], listaIntervalos[i][1]);
+            probabilidades.push(prob);
+        }
+    }
+    if(distribucionSeleccionada == "input-poisson") {
+        for(var i=0; i<frecuenciasObservadas.length; i++) {
+            var prob = Distribucion.probPoisson(lambda, frecuenciasObservadas[i]);
+            probabilidades.push(prob);
+        }
+    }
+    return probabilidades;
+}
+
+function calcularFrecuenciaEsperada(probabilidades, cantidadRegistros) {
+    var frecuenciasEsperadas = [];
+    for(var i=0; i<probabilidades.length; i++) {
+        frecuenciasEsperadas.push(probabilidades[i] * cantidadRegistros);
+    }
+    return frecuenciasEsperadas;
+}
+
+function varianza(arr) {
+    var acum = 0;
+    for(var i=0; i<arr.length; i++) {
+        acum += arr[i]**2;
+    }
+    var res = acum / (arr.length-1);
+    return res;
 }
 
 

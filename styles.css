@@ -59,7 +59,7 @@ select {
     color: #fff;
 }
 
-#rellenar {
+#rellenar, #tablaFrecuencias {
     font-family: 'Fjalla One', sans-serif;
     width: 30%;
     margin: auto;
