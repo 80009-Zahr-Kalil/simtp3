@@ -1,0 +1,8 @@
+body {
+    margin: 40px;
+    padding: 0;
+    background: #fff;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+}
